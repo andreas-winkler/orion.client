@@ -32,10 +32,10 @@ define(['i18n!profile/nls/messages', 'require', 'dojo', 'dijit', 'orion/commands
 			dojo.connect(this.contentText, "onChange", dojo.hitch(this, function(myDijit,p){ //$NON-NLS-0$
 					if(myDijit.get('value')!==""){ //$NON-NLS-0$
 						var value = parseInt(myDijit.get('value')); //$NON-NLS-0$
-						p.innerHTML = dojo.date.locale.format(new Date(value), {formatLength: "short"}); //$NON-NLS-0$
+						p.textContent = dojo.date.locale.format(new Date(value), {formatLength: "short"}); //$NON-NLS-0$
 					}
-					if(p.innerHTML==="") {
-						p.innerHTML="&nbsp"; //$NON-NLS-0$
+					if(p.textContent==="") {
+						p.textContent=""; //$NON-NLS-0$
 					}
 				}, this.contentText, this.dateP));
 			this.get = dojo.hitch(this.contentText,this.contentText.get);
@@ -142,7 +142,8 @@ define(['i18n!profile/nls/messages', 'require', 'dojo', 'dijit', 'orion/commands
 			
 			
 			for(var i=0; i<pluginsList.length; i++){
-				var pluginDiv = dojo.create("div", {style: "clear: both", innerHTML: dojo.string.substitute(messages["Loading ${0}..."],[pluginsList[i].Url])}, userProfile.profileForm.get("domNode")); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-0$
+				var pluginDiv = dojo.create("div", {style: "clear: both"}, userProfile.profileForm.get("domNode")); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-0$
+				pluginDiv.textContent = dojo.string.substitute(messages["Loading ${0}..."],[pluginsList[i].Url]); //$NON-NLS-0$
 				var pluginReference= this.pluginRegistry.getPlugin(pluginsList[i].Url);
 				if(pluginReference===null){
 					var registry = this.registry;
@@ -189,8 +190,6 @@ define(['i18n!profile/nls/messages', 'require', 'dojo', 'dijit', 'orion/commands
 				if(this.profileForm){
 					this.profileForm.reset();
 					this.profileForm.set('value', jsonData); //$NON-NLS-0$
-					if(dojo.byId("profileBanner")) //$NON-NLS-0$
-						dojo.byId("profileBanner").innerHTML = dojo.string.substitute(messages["Profile Information for ${0}"], ["<b style='color: #000'>" + jsonData.login + "</b>"]); //$NON-NLS-3$ //$NON-NLS-2$ //$NON-NLS-0$
 				}
 				for(var i in this.iframes){
 					this.setHash(this.iframes[i], jsonData.Location);

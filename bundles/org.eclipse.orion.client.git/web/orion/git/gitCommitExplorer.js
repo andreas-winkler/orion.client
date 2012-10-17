@@ -155,7 +155,7 @@ define(['i18n!git/nls/gitmessages', 'dojo', 'orion/section', 'orion/explorers/ex
 			}
 
 			var contentParent = dojo.create("div", {"role": "region", "class":"sectionTable"}, tableNode, "last");
-			contentParent.innerHTML = '<list id="commitNode" class="mainPadding"></list>'; //$NON-NLS-0$
+			contentParent.appendChild(dojo.create("list", {id: "commitNode", className: "mainPadding"})); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-0$
 
 		    var list = dojo.byId( "commitNode" );		 //$NON-NLS-0$
 			
@@ -176,17 +176,17 @@ define(['i18n!git/nls/gitmessages', 'dojo', 'orion/section', 'orion/explorers/ex
 				dojo.create( "div", {"style":"padding-top:15px"}, detailsView ); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-0$
 			}
 						
-			dojo.create( "span", { "class":"gitSecondaryDescription", innerHTML: i18nUtil.formatMessage(messages["commit: 0"], commit.Name)}, detailsView ); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-0$
+			var span = dojo.create( "span", { "class":"gitSecondaryDescription"}, detailsView ); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-0$
+			span.textContent = i18nUtil.formatMessage(messages["commit: 0"], commit.Name);
 			
 			if (commit.Parents && commit.Parents.length > 0){
 				dojo.create( "div", null, detailsView ); //$NON-NLS-0$
 				
 				var parentMessage = dojo.create( "span", { "class":"gitSecondaryDescription"}, detailsView ); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-0$
 				
-				var temp = dojo.create("span"); //$NON-NLS-0$
-				var link = dojo.create("a", {className: "pnavlinkonpage", href: "/git/git-commit.html#" + commit.Parents[0].Location + "?page=1&pageSize=1"}, temp); //$NON-NLS-3$ //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-0$
-				dojo.place(document.createTextNode(commit.Parents[0].Name), link);
-				parentMessage.innerHTML = i18nUtil.formatMessage(messages["parent: 0"], temp.innerHTML);
+				var link = dojo.create("a", {className: "pnavlinkonpage", href: "/git/git-commit.html#" + commit.Parents[0].Location + "?page=1&pageSize=1"}); //$NON-NLS-3$ //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-0$
+				link.textContent = i18nUtil.formatMessage(messages["parent: 0"], commit.Parents[0].Name);
+				dojo.place(link, parentMessage, "only"); //$NON-NLS-0$
 			}
 			
 			dojo.create( "div", {"style":"padding-top:15px"}, detailsView ); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-0$
