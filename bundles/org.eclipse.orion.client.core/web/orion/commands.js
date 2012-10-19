@@ -133,6 +133,7 @@ define(['i18n!orion/nls/messages', 'require', 'dojo', 'dijit', 'orion/uiUtils', 
 				dojo.empty(this.containerNode);
 				this.containerNode.appendChild(value);
 			}
+			this._set("label", this.containerNode.innerHTML);
 		},
 		
 		setLink: function(href, name) {
@@ -156,12 +157,10 @@ define(['i18n!orion/nls/messages', 'require', 'dojo', 'dijit', 'orion/uiUtils', 
 			if (typeof content === "string") {
 				this._set("label", content);
 				this.containerNode.textContent = content;
-				if(this.showLabel === false && !this.params.title){
-					this.titleNode.title = dojo.trim(this.containerNode.innerText || this.containerNode.textContent || '');
-				}
 			} else if (content) {
 				dojo.empty(this.containerNode);
 				this.containerNode.appendChild(content);
+				this._set("label", this.containerNode.innerHTML);
 			}
 		}
 	});
@@ -267,13 +266,13 @@ define(['i18n!orion/nls/messages', 'require', 'dojo', 'dijit', 'orion/uiUtils', 
 		},
 
 		_setLabelAttr: function(content) {
-			this.label = null;
 			if (typeof content === "string") {
 				this.domNode.textContent = content;
 			} else {
 				dojo.empty(this.domNode);
 				this.domNode.appendChild(content);
 			}
+			this.label = this.domNode.innerHTML;
 		}
 	});
 
